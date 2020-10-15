@@ -8,25 +8,29 @@ class Form extends Component {
         this.priorityButtons = [
             {
                 color: "🔴",
-                level: 'high-priority'
+                level: 'High'
             },
             {
                 color: "🟡",
-                level: 'mid-priority'
+                level: 'Mid'
             },
             {
                 color: "🟢",
-                level: 'low-priority'
+                level: 'Low'
             }];
         this.state = {
+            taskID: null,
             textInput: "",
+            priorityInput: "",
+            completed: false,
+            visible: true
         };
     }
 
     render() {
         return (
             <>
-                <form>
+                <form className="container-fluid">
                     <div class="form-row align-items-center">
                         <div class="col px-0">
                             <input
@@ -39,29 +43,26 @@ class Form extends Component {
                         <div class="col px-0">
                             <input
                                 className="form-control"
-                                placeholder="High"
+                                placeholder="red"
 
                             >
                             </input>
                         </div>
-                        <div class="col px-0">
-                            <input
-                                className="form-control"
-                                placeholder="Med"
 
-                            >
-                            </input>
-                        </div>
-                        <div class="col px-0">
-                            <input
-                                className="form-control"
-                                placeholder="Low"
+                        {/* loop to generate priority buttons */}
+                            {/* for (let i = 0; i < 3; i++ ){
+                            <div>
+                                <input
+                                    className="form-control"
+                                    placeholder={this.priorityButtons.color}
 
-                            >
-                            </input>
-                        </div>
+                                />
+
+                            </div>
+                        } */}
                         <button
                             className="btn btn-primary col"
+                            //onClick=addItem()
                         >
                             Add
                         </button>
@@ -72,22 +73,24 @@ class Form extends Component {
 
     }
     addItem() {
-        //take form input {name, dueDate, priority} and create Item
+        //applies to the Submit Button
+        //take form input {name, priority} and pass it to the [tasks] within the List object
     }
+
+
 }
 
 export default Form;
 
 
 
-/*
+/* Notepad
 Priority Types:
-    Past Due: ❗️
     High: 🔴
     Mid: 🟡
     Low: 🟢
 
-Task Name  |  Due Date  |  Priority  |  Add
+Task Name  |  PriorityPicker  |  Add
 
 
 HTML for Created Items
