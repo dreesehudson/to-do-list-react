@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from './Components/Header.js'
 import Form from './Components/Form.js'
 import List from './Components/List.js'

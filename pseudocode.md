@@ -7,71 +7,101 @@ render()
 
 ## App
 
-render() 
+render()
     - Header
     - Form
     - List
     - Footer
 
-## Title -> Header.js
+## Header -> Header.js
 
 function Header(){
-    Header Text
+    Web Page Title
 }
 
- no defined methods.
+ No defined methods.
 
-## Input Field w/ Submit Button -> Form.js
+## Form Input Field w/ Submit Button -> Form.js
 
 class Form extends Component
 
-WireFrame:
-Input Text Box | Priority Buttons | Submit Button
 
 Methods:
-constructor()
+constructor() {
+
 - TaskName: TextInput
 - PriorityColor: 🔴, 🟡, 🟢
-- Completed: True/False
+- Completed: False
+- Visibility: True
+}
 
-render()
+- render() {
+  - WireFrame:
+    - Input Text Box | Priority Buttons 🔴 🟡 🟢 | Submit Button <- onClick="addToDo()"
+  - return(HTML)
+}
 
-addToDo()
-- Create new List object
-- Push new List object to List Array
-- Sort List array based on Priority
-- tell List to re-render with updated array
+- addToDo() {
+  - Create new List object
+  - Push new List object to [Tasks] Array
+}
 
-## List of Created Todo's -> List.js
+## List of Created To Do's -> List.js
 
 class List extends Component
 
-ToDo WireFrame
-checkbox | TaskName | PriorityColor | Delete Button
-  
-Initialize Empty List Array
+- constructor(){
+    -Initialize Empty [Tasks] Array
+}
 
+- render() {
+  - ToDo WireFrame
+    - checkbox | TaskName (display only) | PriorityColor (display only) | Delete Button <- onClick="deleteToDo()"
+        ^- onClick="completeToDo" or "reactivateToDo"
+    return(HTML)
+}
 List Methods:
+
 - completeTodo()
-  - Add Strike-through Text
-  - Change State from Active to Completed
+  - Add strike-through Text
+  - Change completed from false to true
   
 - reactivateTodo()
-  - remove strike-through
-  - Change State from Completed to Active
+  - Remove strike-through
+  - Change completed from true to false
 
 - deleteTodo()
-  - Erase toDo from List
+  - Erase target toDo from [Tasks]
 
 ## Info and Filter Row -> Footer.js
+
 class Footer extends Component
 
-- Filter Options
-  - All
-    - Show Active and Completed Tasks
-  - Active Only
-    - Show Active Tasks
-    - Hide Completed Tasks
-  - Completed Only
-    - Hide Active Tasks
-    - Show Completed Tasks
+- render() {
+  - Wireframe:
+    Remaining Active Task Count: # || Filter: All | Active | Completed || Completed Task Count: #
+
+  - return(HTML)
+}
+
+- showAll(){
+  - set visibility of all list items to true
+}
+
+- showActive(){
+  - ternary to set visibility of active list items to true, else false
+
+}
+
+- showCompleted(){
+  - ternary to set visibility of completed list items to true, else false
+
+}
+
+- countActive(){
+  - count list items in [tasks] with completed: false
+}
+
+- countCompleted(){
+  - count list items in [tasks] with completed: true
+}

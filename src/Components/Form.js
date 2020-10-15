@@ -31,8 +31,8 @@ class Form extends Component {
         return (
             <>
                 <form className="container-fluid">
-                    <div class="form-row align-items-center">
-                        <div class="col px-0">
+                    <div className="form-row align-items-center">
+                        <div className="col px-0">
                             <input
                                 className="form-control"
                                 placeholder="Task Name"
@@ -40,7 +40,7 @@ class Form extends Component {
                             >
                             </input>
                         </div>
-                        <div class="col px-0">
+                        <div className="col px-0">
                             <input
                                 className="form-control"
                                 placeholder="red"
@@ -94,13 +94,13 @@ Task Name  |  PriorityPicker  |  Add
 
 
 HTML for Created Items
-<div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
+<div className="input-group mb-3">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
                                 <input type="checkbox" aria-label="Checkbox for following text input">
     </div>
                             </div>
-                            <input type="text" class="form-control" aria-label="Text input with checkbox">
+                            <input type="text" className="form-control" aria-label="Text input with checkbox">
 </div>
 
 

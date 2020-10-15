@@ -34,10 +34,10 @@ class List extends Component {
         return (
             <>
             <div className="container-fluid">
-                <ul class="list-group">
-                    <li class="list-group-item">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <div className="input-group-prepend">
+                            <div className="input-group-text">
                                 <input
                                     type="checkbox"
                                     aria-label="Checkbox for following text input"
@@ -45,7 +45,7 @@ class List extends Component {
                                 />
                             </div>
                         </div>
-                        <div class="list-group-text">
+                        <div className="list-group-text">
                             Item Number 1
                         </div>
                         <button
