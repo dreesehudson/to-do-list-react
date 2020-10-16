@@ -1,96 +1,75 @@
 import React, { Component } from 'react';
 
-
-
 class Form extends Component {
-    constructor() {
-        super();
-        this.priorityButtons = [
-            {
-                color: "🔴",
-                level: 'High'
-            },
-            {
-                color: "🟡",
-                level: 'Mid'
-            },
-            {
-                color: "🟢",
-                level: 'Low'
-            }];
-        this.state = {
-            taskID: null,
-            textInput: "",
-            priorityInput: "",
-            completed: false,
-            visible: true
+    constructor(props) {
+        super(props);
+
+    }
+
+    updateInput(key, value) {
+        //update react status
+        this.setState({
+            [key]: value
+        });
+    }
+
+    //applies as onClick to the Submit Button
+    addItem() {
+        //object to be added to array of tasks
+        const newTask = {
+            id: 1,//timeStamp
+            value: this.props.newTask.value
         };
+
+        //proxy of current list of items
+        const tasks = [...this.props.tasks];
+
+        //add new object to 
+        tasks.unshift(newTask);
+
+        //take form input {name} and pass it to the [tasks] within the App Component
+        this.setState({
+            tasks,        //updates [tasks] from proxy that we have made above
+            newTask: ""    //clear textInput for next entry
+        });
+    }
+
+    inputTextHandler() {
+        //update this.state.textInput with each keystroke
+        this.setState()
     }
 
     render() {
         return (
             <>
-                <form className="container-fluid">
-                    <div className="form-row align-items-center">
-                        <div className="col px-0">
-                            <input
-                                className="form-control"
-                                placeholder="Task Name"
-
-                            >
-                            </input>
-                        </div>
-                        <div className="col px-0">
-                            <input
-                                className="form-control"
-                                placeholder="red"
-
-                            >
-                            </input>
-                        </div>
-
-                        {/* loop to generate priority buttons */}
-                            {/* for (let i = 0; i < 3; i++ ){
-                            <div>
-                                <input
-                                    className="form-control"
-                                    placeholder={this.priorityButtons.color}
-
-                                />
-
-                            </div>
-                        } */}
-                        <button
-                            className="btn btn-primary col"
-                            //onClick=addItem()
-                        >
-                            Add
-                        </button>
-                    </div>
-                </form>
+                <input
+                    type="text"
+                    placeholder="Task Name"
+                    value={this.props.newItem}
+                    onChange={e => this.updateInput("newTask", e.target.value)}
+                >
+                </input>
+                <button
+                    onClick={this.addItem}
+                >+
+                </button>
             </>
         );
 
     }
-    addItem() {
-        //applies to the Submit Button
-        //take form input {name, priority} and pass it to the [tasks] within the List object
-    }
-
 
 }
+
+
 
 export default Form;
 
 
 
 /* Notepad
-Priority Types:
-    High: 🔴
-    Mid: 🟡
-    Low: 🟢
 
-Task Name  |  PriorityPicker  |  Add
+
+Task Name    |  Add
 
 
 HTML for Created Items

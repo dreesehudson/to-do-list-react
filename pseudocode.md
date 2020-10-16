@@ -25,7 +25,6 @@ function Header(){
 
 class Form extends Component
 
-
 Methods:
 constructor() {
 
