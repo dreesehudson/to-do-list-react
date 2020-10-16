@@ -15,27 +15,29 @@ class List extends Component {
     }
 
 
-    render() {
-        return (
-            <ul>
-                {this.props.tasks.map(item => {
-                    return (
-                        <li key={item.id}>
-                            {item.value}
-                            <button
-                                onClick={() => this.deleteItem(item.id)}
-                            >&times;</button>
-                        </li>
+    // render() {
+    //     return (
 
-                    )
-                }
-                )
+    //     )}}
+//             <>
+//                 <ul>
+//                     {this.props.tasks.map(station => (
+//                         <div id={task.id}>{task.value}</div>
+//                     ))}
+// ); }
+//                     < li 
+//                         <button
+//                             onClick={() => this.deleteItem(item.id)}
+//                         >&times;</button>
 
-                }
-            </ul >
-        )
-    }
-}
+//                     </li>
+
+//                 }
+//             </ul >
+//             </>
+//         )
+//     }
+// }
 
 
 
@@ -51,7 +53,7 @@ class List extends Component {
 //     //remove activateItem() from checkbox onClick
 //     //add completeItem() to checkbox onClick
 // }
-
+}
 
 export default List;
 

@@ -3,35 +3,35 @@ import React, { Component } from 'react';
 class Form extends Component {
     constructor(props) {
         super(props);
+        
+        this.addItem = this.addItem.bind(this);
+        this.updateInput = this.updateInput.bind(this);
+    
 
     }
-
+    
     updateInput(key, value) {
         //update react status
         this.setState({
             [key]: value
         });
     }
-
+    
     //applies as onClick to the Submit Button
     addItem() {
         //object to be added to array of tasks
         const newTask = {
             id: 1,//timeStamp
-            value: this.props.newTask.value
+            value: this.state.newTask
         };
-
-        //proxy of current list of items
-        const tasks = [...this.props.tasks];
-
+                
         //add new object to 
-        tasks.unshift(newTask);
+        let proxy = this.props.tasks;
+        proxy.unshift(newTask.value);
+        this.setState({ tasks: proxy});
+        
+        // this.setState({newTask});
 
-        //take form input {name} and pass it to the [tasks] within the App Component
-        this.setState({
-            tasks,        //updates [tasks] from proxy that we have made above
-            newTask: ""    //clear textInput for next entry
-        });
     }
 
     inputTextHandler() {
@@ -43,6 +43,7 @@ class Form extends Component {
         return (
             <>
                 <input
+                    id="form-input"
                     type="text"
                     placeholder="Task Name"
                     value={this.props.newItem}

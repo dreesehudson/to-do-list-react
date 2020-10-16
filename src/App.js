@@ -31,9 +31,8 @@ class App extends Component {
       <Form
         newTask = {this.state.newTask}
         tasks = {this.state.tasks} />
-      <List 
-        newTask = {this.state.newTask}
-        tasks = {this.state.tasks} />
+      {/* <List 
+        tasks = {this.state.tasks} /> */}
       <Footer />
     </div>
     );
