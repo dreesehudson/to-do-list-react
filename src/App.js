@@ -2,37 +2,132 @@ import React, { Component } from 'react';
 //importing Components
 import Header from './Components/Header.js'
 import Form from './Components/Form.js'
-import List from './Components/List.js'
 import Footer from './Components/Footer.js'
 
 
 class App extends Component {
   constructor(props) {
-    super(props)
-    //array is populated from Form Object
+    super(props);
     this.state = {
-      newTask: "",
-      tasks: []
+      tasks: [],
+      input: "",
+      // activeCount: 0,
+      // completedCount: 0,
+
     }
+    this.changeHandler = this.changeHandler.bind(this);
+    this.addItem = this.addItem.bind(this);
+    this.deleteItem = this.deleteItem.bind(this);
+  }
+
+  componentDidMount() {
+    //load localStorage if present
+  }
+
+  componentWillUnmount() {
+    //save list to localStorage on unload.
+  }
+
+  //update state as user types in the input field
+  changeHandler(e) {
+    this.setState({
+      input: e.target.value
+    })
+  }
+
+  //applies as onClick to the Submit Button
+  addItem() {
+    //object to be added to beginning of the array of tasks
+    this.setState(state => ({
+      tasks: [{
+        "name": state.input,
+        "id": Date.now(),
+        "completed": false
+      },
+      ...state.tasks]
+    }))
+
+    this.setState({
+      //clear out input field for next entry
+      input: ""
+    })
+  }
+
+  //applies as onClick to the X Button on each task
+  deleteItem(id) {
+    console.log(id);
+    //proxy of state for current list of tasks.
+    let taskList = [...this.state.tasks]; 
+
+    //remove item
+    const filteredTasks = taskList.filter(item => (item.id !== id));
+    
+    //reset state to filtered list
+    this.setState({
+      tasks: filteredTasks
+    })
+     
+  }
+
+  // completeItem() {
+  //     //change state.completed false to true
+  //     //this.tasks[event.target].completed = true;
+  //     //remove completeItem() from checkbox onClick
+  //     //add activateItem() to checkbox onClick
+  // }
+  // activateItem() {
+  //     //change state.completed true to false
+  //     //this.tasks[event.target].completed = false;
+  //     //remove activateItem() from checkbox onClick
+  //     //add completeItem() to checkbox onClick
+  // }
+
+  showAll() {
+    //set visibility of all list items to true
+  }
+
+  showActive() {
+    //ternary to set visibility of active list items to true, else false
 
   }
-  
-  componentDidMount() {
-    
+
+  showCompleted() {
+    //ternary to set visibility of completed list items to true, else false
+
   }
-  
-  componentWillUnmount() {
-    
+
+  countActive() {
+    //count list items in [tasks] with completed: false
+
   }
-  
+
+  countCompleted() {
+    //count list items in [tasks] with completed: true
+  }
+
+
   render() {
-    return (<div className="App container">
+    return (<div className="App container justify-content-center">
       <Header />
       <Form
-        newTask = {this.state.newTask}
-        tasks = {this.state.tasks} />
-      {/* <List 
-        tasks = {this.state.tasks} /> */}
+        input={this.state.input}
+        changeHandler={this.changeHandler}
+        addItem={this.addItem}
+      />
+      <ul className="list-group mt-2 mx-auto row">
+        {this.state.tasks.map((item) =>
+          <li  key={item.id}>
+            <div className="list-group-item mb-3">
+              {item.name}
+              <button data-id={item.id} className="btn btn-sm btn-danger float-right"
+                onClick={this.deleteItem(item.id)}>Delete
+              </button>
+            </div>
+          </li>
+        )}
+      </ul>
+
+
       <Footer />
     </div>
     );
@@ -40,25 +135,3 @@ class App extends Component {
 }
 export default App;
 
-// //located on Form, captures keyboard input into state
-// this.inputTextHandler = this.inputTextHandler.bind(this);
-// //located on Form, creates and sends task item to state[task]
-// this.addItem = this.addItem.bind(this);
-
-// //located on List, applied to "X" button to remove item from state[tasks]
-// this.deleteItem = this.deleteItem.bind(this);
-// //located on List, applied to checkbox when unchecked of each task, makes completed: true and applies strike-through
-// this.completeItem = this.completeItem.bind(this);
-// //located on List, applied to checkbox when checked of each task, makes completed: false and removes strike-through
-// this.activateItem = this.activateItem.bind(this);
-
-// //located on Footer, shows all tasks
-// this.showAll = this.showAll.bind(this);
-// //located on Footer, shows only active tasks
-// this.showActive = this.showActive.bind(this);
-// //located on Footer, shows only completed tasks
-// this.showCompleted = this.showCompleted.bind(this);
-// //located on Footer, counts active tasks
-// this.countActive = this.countActive.bind(this);
-// //located on Footer, counts completed tasks
-// this.countCompleted = this.countCompleted.bind(this);
