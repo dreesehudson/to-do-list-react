@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 //importing Components
 import Header from './Components/Header.js'
 import Form from './Components/Form.js'
-import Footer from './Components/Footer.js'
+import Filter from './Components/Filter.js'
+import List from './Components/List.js'
+import { faStreetView } from '@fortawesome/free-solid-svg-icons';
 
 
 class App extends Component {
@@ -11,13 +13,15 @@ class App extends Component {
     this.state = {
       tasks: [],
       input: "",
-      // activeCount: 0,
-      // completedCount: 0,
+
+      currentFilter: 'all'
 
     }
     this.changeHandler = this.changeHandler.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
+    this.showItems = this.showItems.bind(this);
+    //this.toggleCheckbox = this.toggleCheckbox.bind(this);
   }
 
   componentDidMount() {
@@ -28,6 +32,8 @@ class App extends Component {
     //save list to localStorage on unload.
   }
 
+
+
   //update state as user types in the input field
   changeHandler(e) {
     this.setState({
@@ -36,63 +42,56 @@ class App extends Component {
   }
 
   //applies as onClick to the Submit Button
-  addItem() {
+  async addItem() {
     //object to be added to beginning of the array of tasks
-    this.setState(state => ({
+    await this.setState(state => ({
       tasks: [{
         "name": state.input,
         "id": Date.now(),
         "completed": false
       },
-      ...state.tasks]
-    }))
-
-    this.setState({
-      //clear out input field for next entry
+      ...state.tasks],
       input: ""
-    })
+    }))
+    this.setState(
+      { view: this.state.tasks }
+    )
   }
 
   //applies as onClick to the X Button on each task
   deleteItem(id) {
     console.log(id);
     //proxy of state for current list of tasks.
-    let taskList = [...this.state.tasks]; 
+    let taskList = [...this.state.tasks];
 
     //remove item
     const filteredTasks = taskList.filter(item => (item.id !== id));
-    
+
     //reset state to filtered list
     this.setState({
-      tasks: filteredTasks
+      tasks: filteredTasks,
+      view: filteredTasks
+
     })
-     
-  }
-
-  // completeItem() {
-  //     //change state.completed false to true
-  //     //this.tasks[event.target].completed = true;
-  //     //remove completeItem() from checkbox onClick
-  //     //add activateItem() to checkbox onClick
-  // }
-  // activateItem() {
-  //     //change state.completed true to false
-  //     //this.tasks[event.target].completed = false;
-  //     //remove activateItem() from checkbox onClick
-  //     //add completeItem() to checkbox onClick
-  // }
-
-  showAll() {
-    //set visibility of all list items to true
-  }
-
-  showActive() {
-    //ternary to set visibility of active list items to true, else false
 
   }
 
-  showCompleted() {
-    //ternary to set visibility of completed list items to true, else false
+  showItems(filter) {
+    //proxy of state for current list of tasks.
+    let taskList = [...this.state.tasks];
+    if (filter === "completed") {
+      //filter to only include completed items
+      return taskList.filter(item => (item.completed === true));
+    }
+    else if (filter === "active") {
+      return taskList.filter(item => (item.completed === false));
+    }
+
+
+    //reset state to filtered list
+    this.setState({
+      currentFilter: filter
+    })
 
   }
 
@@ -105,33 +104,54 @@ class App extends Component {
     //count list items in [tasks] with completed: true
   }
 
+  //applies as onClick to the checkbox on each task
+  markComplete(id) {
+    console.log(id);
+    //proxy of state for current list of tasks.
+    let taskList = [...this.state.tasks];
+
+    //change data-* attribute to data-complete
+    const filteredTasks = taskList.filter(item => (item.id === id));
+
+    //reset state to filtered list
+    this.setState({
+      tasks: filteredTasks,
+      view: filteredTasks
+    })
+
+  }
+
+  // markAllDone() {
+  //   let updatedData = this.state.data;
+  //   Object.keys(updatedData).forEach(function (box) {
+  //     updatedData[box]['list'].forEach(function (item) {
+  //       item.done = true;
+  //     })
+  //   });
+  //   this.setState({ data: updatedData });
+  // }
 
   render() {
-    return (<div className="App container justify-content-center">
+    return (
+    <div className="App container justify-content-center">
       <Header />
       <Form
         input={this.state.input}
         changeHandler={this.changeHandler}
         addItem={this.addItem}
       />
-      <ul className="list-group mt-2 mx-auto row">
-        {this.state.tasks.map((item) =>
-          <li  key={item.id}>
-            <div className="list-group-item mb-3">
-              {item.name}
-              <button data-id={item.id} className="btn btn-sm btn-danger float-right"
-                onClick={this.deleteItem(item.id)}>Delete
-              </button>
-            </div>
-          </li>
-        )}
-      </ul>
+      <Filter
+        showItems={this.showItems}
+
+      />
+      <List
+        tasks={this.state.tasks}
+        currentFilter={this.currentFilter}
 
 
-      <Footer />
+      />
     </div>
     );
   }
 }
 export default App;
-

@@ -5,7 +5,7 @@ function Form(props) {
     return (
         <div className="row justify-content-center">
             <input 
-                value={props.input.name}
+                value={props.input}
                 onChange={props.changeHandler}
                 placeholder="Task Name">
 
