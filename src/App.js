@@ -22,17 +22,26 @@ class App extends Component {
     this.deleteAllTasks = this.deleteAllTasks.bind(this);
     this.markAllActive = this.markAllActive.bind(this);
     this.markAllComplete = this.markAllComplete.bind(this);
+    this.countActive = this.countActive.bind(this);
+    this.countCompleted = this.countCompleted.bind(this);
+
   }
 
   componentDidMount() {
     //load localStorage if present
+
+    let storedData = window.localStorage.getItem('tasks')
+    if (storedData) {
+      this.setState({ tasks: JSON.parse(storedData) })
+    } else {
+      window.localStorage.setItem('tasks', JSON.stringify({}))
+    }
   }
 
-  componentWillUnmount() {
+  componentDidUpdate() {
     //save list to localStorage on unload.
+    window.localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
   }
-
-
 
   //update state as user types in the input field
   changeHandler(e) {
@@ -78,15 +87,6 @@ class App extends Component {
 
   }
 
-  countActive() {
-    //count list items in [tasks] with completed: false
-
-  }
-
-  countCompleted() {
-    //count list items in [tasks] with completed: true
-  }
-
   //applies as onClick to the checkbox on each task
   markComplete(id) {
     console.log(id);
@@ -106,7 +106,7 @@ class App extends Component {
     console.log("markAllActive")
     //proxy of state for current list of tasks.
     let taskList = [...this.state.tasks];
-    taskList.map((item) => 
+    taskList.map((item) =>
       item.completed = false)
     console.log(taskList);
     //reset state to empty list
@@ -119,7 +119,7 @@ class App extends Component {
     console.log("markAllComplete")
     //proxy of state for current list of tasks.
     let taskList = [...this.state.tasks];
-    taskList.map((item) => 
+    taskList.map((item) =>
       item.completed = true)
     console.log(taskList);
     //reset state to empty list
@@ -138,6 +138,19 @@ class App extends Component {
     })
   }
 
+  countActive() {
+    //count list items in [tasks] with completed: false
+    const count = this.state.tasks.filter((item) => this.item.completed).length;
+    return count;
+  }
+
+  countCompleted() {
+    //count list items in [tasks] with completed: true
+    const count = this.state.tasks.filter((item) => !this.item.completed).length;
+    return count;
+  }
+
+
   render() {
     return (
       <div className="App container justify-content-center">
@@ -152,6 +165,8 @@ class App extends Component {
           markAllActive={this.markAllActive}
           markAllComplete={this.markAllComplete}
           deleteAllTasks={this.deleteAllTasks}
+          countActive={this.countActive}
+          countCompleted={this.countCompleted}
         />
         <ul className="list-group mt-2 mx-auto row">
           {this.state.tasks
