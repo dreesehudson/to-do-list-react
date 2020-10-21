@@ -13,7 +13,6 @@ class App extends Component {
       input: "",
 
       currentFilter: 'all'
-
     }
     this.changeHandler = this.changeHandler.bind(this);
     this.addItem = this.addItem.bind(this);
@@ -24,9 +23,7 @@ class App extends Component {
     this.markAllComplete = this.markAllComplete.bind(this);
     this.countActive = this.countActive.bind(this);
     this.countCompleted = this.countCompleted.bind(this);
-
   }
-
   componentDidMount() {
     //load localStorage if present
 
@@ -37,19 +34,16 @@ class App extends Component {
       window.localStorage.setItem('tasks', JSON.stringify({}))
     }
   }
-
   componentDidUpdate() {
     //save list to localStorage on unload.
     window.localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
   }
-
   //update state as user types in the input field
   changeHandler(e) {
     this.setState({
       input: e.target.value
     })
   }
-
   //applies as onClick to the Submit Button
   async addItem() {
     //object to be added to beginning of the array of tasks
@@ -64,7 +58,6 @@ class App extends Component {
       input: ""
     }))
   }
-
   //applies as onClick to the X Button on each task
   deleteItem(id) {
     console.log(id);
@@ -80,21 +73,22 @@ class App extends Component {
     })
 
   }
-
-  check(listItemId) {
+  check(itemId) {
+    //copy of current state
     let taskList = this.state.tasks;
-    let itemIndex = this.state.tasks.findIndex(item => item.id === listItemId);
+    //index of object passed in
+    let itemIndex = this.state.tasks.findIndex(item => item.id === itemId);
+    //toggle completed value true/false
     taskList[itemIndex].completed = !taskList[itemIndex].completed;
-    this.setState({ tasks: taskList })
+    //set state with new completed state
+    this.setState(state => ({ tasks: taskList }))
   }
-
   setFilter(filter) {
     this.setState(
       { currentFilter: filter }
     )
 
   }
-
   //applies as onClick to the checkbox on each task
   markComplete(id) {
     console.log(id);
@@ -122,7 +116,6 @@ class App extends Component {
       tasks: taskList
     })
   }
-
   markAllComplete() {
     console.log("markAllComplete")
     //proxy of state for current list of tasks.
@@ -135,7 +128,6 @@ class App extends Component {
       tasks: taskList
     })
   }
-
   deleteAllTasks() {
     console.log("deleteAllTasks")
     //proxy of state for current list of tasks.
@@ -145,17 +137,16 @@ class App extends Component {
       tasks: taskList
     })
   }
-
   countActive() {
     //count list items in [tasks] with completed: false
-    const count = this.state.tasks.filter((item) => this.item.completed).length;
-    return count;
+    const count = this.state.tasks.filter((item) => !item.completed);
+    return count.length;
   }
 
   countCompleted() {
     //count list items in [tasks] with completed: true
-    const count = this.state.tasks.filter((item) => !this.item.completed).length;
-    return count;
+    const count = this.state.tasks.filter((item) => item.completed);
+    return count.length;
   }
 
 
@@ -176,8 +167,9 @@ class App extends Component {
           countActive={this.countActive}
           countCompleted={this.countCompleted}
         />
-        <ul className="list-group mt-2 mx-auto row">
-          {this.state.tasks
+        <ul 
+          className="list-group mt-2 mx-auto row list-unstyled">
+          {this.state.tasks && this.state.tasks
             .filter((item) => {
               if (this.state.currentFilter === "all") {
                 return item
@@ -189,17 +181,18 @@ class App extends Component {
                 return item
               }
             }
-            )
+            ) 
             .map((item) =>
-              <li key={item.id}>
+              <li 
+                key={item.id}>
                 <div className="list-group-item mb-3">
                   <div className="form-check">
                     <input
                       type="checkbox"
                       className="form-check-input"
                       id={item.id}
-                      onClick={this.check(item.id)}
-                      checked={item.completed}
+                      onChange={ () => this.check(item.id)}
+                      checked={item.completed}  //<-----
                     />
                     <label
                       //if item.completed is true, strike-through the item
