@@ -8,23 +8,45 @@ function Footer(props) {
             <div className="btn-group btn-group-sm" role="group" aria-label="...">
                 <button
                     className="btn btn-secondary btn-sm"
-                    onClick={() => props.showItems('all')}
+                    onClick={() => props.setFilter('all')}
                 >
                     All
                 </button>
                 <button
                     className="btn btn-secondary btn-sm"
-                    onClick={() => props.showItems('active')}
+                    onClick={() => props.setFilter('active')}
 
                 >
                     Open
                 </button>
                 <button
                     className="btn btn-secondary btn-sm"
-                    onClick={() => props.showItems('completed')}
+                    onClick={() => props.setFilter('completed')}
 
                 >
                     Completed
+                </button>
+            </div>
+            <div className="btn-group btn-group-sm mt-2" role="group" aria-label="...">
+                <button
+                    className="btn btn-success btn-sm"
+                    onClick={props.markAllComplete}
+                >
+                    Mark All Completed
+                </button>
+                <button
+                    className="btn btn-warning btn-sm"
+                    onClick={props.markAllActive}
+
+                >
+                    Mark All Active
+                </button>
+                <button
+                    className="btn btn-danger btn-sm"
+                    onClick={props.deleteAllTasks}
+
+                >
+                    Delete All Tasks
                 </button>
             </div>
         </div>

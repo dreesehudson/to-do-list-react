@@ -3,8 +3,6 @@ import React, { Component } from 'react';
 import Header from './Components/Header.js'
 import Form from './Components/Form.js'
 import Filter from './Components/Filter.js'
-import List from './Components/List.js'
-import { faStreetView } from '@fortawesome/free-solid-svg-icons';
 
 
 class App extends Component {
@@ -20,8 +18,10 @@ class App extends Component {
     this.changeHandler = this.changeHandler.bind(this);
     this.addItem = this.addItem.bind(this);
     this.deleteItem = this.deleteItem.bind(this);
-    this.showItems = this.showItems.bind(this);
-    //this.toggleCheckbox = this.toggleCheckbox.bind(this);
+    this.setFilter = this.setFilter.bind(this);
+    this.deleteAllTasks = this.deleteAllTasks.bind(this);
+    this.markAllActive = this.markAllActive.bind(this);
+    this.markAllComplete = this.markAllComplete.bind(this);
   }
 
   componentDidMount() {
@@ -53,9 +53,6 @@ class App extends Component {
       ...state.tasks],
       input: ""
     }))
-    this.setState(
-      { view: this.state.tasks }
-    )
   }
 
   //applies as onClick to the X Button on each task
@@ -69,29 +66,15 @@ class App extends Component {
 
     //reset state to filtered list
     this.setState({
-      tasks: filteredTasks,
-      view: filteredTasks
-
+      tasks: filteredTasks
     })
 
   }
 
-  showItems(filter) {
-    //proxy of state for current list of tasks.
-    let taskList = [...this.state.tasks];
-    if (filter === "completed") {
-      //filter to only include completed items
-      return taskList.filter(item => (item.completed === true));
-    }
-    else if (filter === "active") {
-      return taskList.filter(item => (item.completed === false));
-    }
-
-
-    //reset state to filtered list
-    this.setState({
-      currentFilter: filter
-    })
+  setFilter(filter) {
+    this.setState(
+      { currentFilter: filter }
+    )
 
   }
 
@@ -116,41 +99,103 @@ class App extends Component {
     //reset state to filtered list
     this.setState({
       tasks: filteredTasks,
-      view: filteredTasks
     })
 
   }
+  markAllActive() {
+    console.log("markAllActive")
+    //proxy of state for current list of tasks.
+    let taskList = [...this.state.tasks];
+    taskList.map((item) => 
+      item.completed = false)
+    console.log(taskList);
+    //reset state to empty list
+    this.setState({
+      tasks: taskList
+    })
+  }
 
-  // markAllDone() {
-  //   let updatedData = this.state.data;
-  //   Object.keys(updatedData).forEach(function (box) {
-  //     updatedData[box]['list'].forEach(function (item) {
-  //       item.done = true;
-  //     })
-  //   });
-  //   this.setState({ data: updatedData });
-  // }
+  markAllComplete() {
+    console.log("markAllComplete")
+    //proxy of state for current list of tasks.
+    let taskList = [...this.state.tasks];
+    taskList.map((item) => 
+      item.completed = true)
+    console.log(taskList);
+    //reset state to empty list
+    this.setState({
+      tasks: taskList
+    })
+  }
+
+  deleteAllTasks() {
+    console.log("deleteAllTasks")
+    //proxy of state for current list of tasks.
+    let taskList = [];
+    //reset state to empty list
+    this.setState({
+      tasks: taskList
+    })
+  }
 
   render() {
     return (
-    <div className="App container justify-content-center">
-      <Header />
-      <Form
-        input={this.state.input}
-        changeHandler={this.changeHandler}
-        addItem={this.addItem}
-      />
-      <Filter
-        showItems={this.showItems}
-
-      />
-      <List
-        tasks={this.state.tasks}
-        currentFilter={this.currentFilter}
-
-
-      />
-    </div>
+      <div className="App container justify-content-center">
+        <Header />
+        <Form
+          input={this.state.input}
+          changeHandler={this.changeHandler}
+          addItem={this.addItem}
+        />
+        <Filter
+          setFilter={this.setFilter}
+          markAllActive={this.markAllActive}
+          markAllComplete={this.markAllComplete}
+          deleteAllTasks={this.deleteAllTasks}
+        />
+        <ul className="list-group mt-2 mx-auto row">
+          {this.state.tasks
+            .filter((item) => {
+              if (this.state.currentFilter === "all") {
+                return item
+              }
+              else if (this.state.currentFilter === "completed" && item.completed) {
+                return item
+              }
+              else if (this.state.currentFilter === "active" && !item.completed) {
+                return item
+              }
+            }
+            )
+            .map((item) =>
+              <li key={item.id}>
+                <div className="list-group-item mb-3">
+                  <div className="form-check">
+                    <input
+                      type="checkbox"
+                      className="form-check-input"
+                      id={item.id}
+                    />
+                    <label
+                      //if item.completed is true, strike-through the item
+                      style={{ textDecoration: ((item.completed) ? 'line-through' : '') }}
+                      className="form-check-label"
+                    >
+                      {item.name}
+                    </label>
+                    <button
+                      data-id={item.id}
+                      className="btn btn-sm btn-danger my-auto float-right"
+                      onClick={() => this.deleteItem(item.id)}
+                    >
+                      Delete
+                  </button>
+                  </div>
+                </div>
+              </li>
+            )}
+        </ul>
+      </div>
     );
   }
 }
