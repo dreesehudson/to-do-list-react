@@ -57,7 +57,8 @@ class App extends Component {
       tasks: [{
         "name": state.input,
         "id": Date.now(),
-        "completed": false
+        "completed": false,
+
       },
       ...state.tasks],
       input: ""
@@ -78,6 +79,13 @@ class App extends Component {
       tasks: filteredTasks
     })
 
+  }
+
+  check(listItemId) {
+    let taskList = this.state.tasks;
+    let itemIndex = this.state.tasks.findIndex(item => item.id === listItemId);
+    taskList[itemIndex].completed = !taskList[itemIndex].completed;
+    this.setState({ tasks: taskList })
   }
 
   setFilter(filter) {
@@ -190,6 +198,8 @@ class App extends Component {
                       type="checkbox"
                       className="form-check-input"
                       id={item.id}
+                      onClick={this.check(item.id)}
+                      checked={item.completed}
                     />
                     <label
                       //if item.completed is true, strike-through the item

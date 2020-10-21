@@ -50,8 +50,8 @@ function Footer(props) {
                 </button>
             </div>
             <div className="row mt-1">
-                <p className="col-6 float-left ml-0">Active Tasks: {props.countActive}</p>
-                <p className="col-6 float-right mr-0">Completed Tasks: {props.countCompleted}</p>
+                {/* <p className="col-6 float-left ml-0">Active Tasks: {props.countActive}</p>
+                <p className="col-6 float-right mr-0">Completed Tasks: {props.countCompleted}</p> */}
             </div>
         </div>
     )
