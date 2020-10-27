@@ -1,20 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" href="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content=""
-    />
-    <link rel="apple-touch-icon" href="" />
 
-    <link rel="manifest" href="" />
-    <title>2do</title>
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+  <meta charset="utf-8" />
+  <link rel="icon" href="" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="description" content="" />
+  <link rel="apple-touch-icon" href="" />
+
+  <link rel="manifest" href="" />
+  <title>2do</title>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.0.0/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAqI9fi7UkExTA-KDEH-ok3LMo6bEKR47s",
+      authDomain: "todolist-d0960.firebaseapp.com",
+      databaseURL: "https://todolist-d0960.firebaseio.com",
+      projectId: "todolist-d0960",
+      storageBucket: "todolist-d0960.appspot.com",
+      messagingSenderId: "571599954708",
+      appId: "1:571599954708:web:84337b7c677fb7760a1801"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+  </script>
+</body>
+
 </html>
