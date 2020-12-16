@@ -1,79 +1,53 @@
 import React from 'react';
+import { Row, Button, Container, ButtonGroup } from 'reactstrap';
 
 function Footer(props) {
-
-
     return (
-        <div className="container-fluid text-center mt-2">
-            <div className="btn-group btn-group-sm" role="group" aria-label="...">
-                <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => props.setFilter('all')}
-                >
-                    All
-                </button>
-                <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => props.setFilter('active')}
-
-                >
-                    Open
-                </button>
-                <button
-                    className="btn btn-secondary btn-sm"
-                    onClick={() => props.setFilter('completed')}
-
-                >
-                    Completed
-                </button>
-            </div>
-            <div className="btn-group btn-group-sm mt-2" role="group" aria-label="...">
-                <button
-                    className="btn btn-success btn-sm"
-                    onClick={props.markAllComplete}
-                >
-                    Mark All Completed
-                </button>
-                <button
-                    className="btn btn-warning btn-sm"
-                    onClick={props.markAllActive}
-
-                >
-                    Mark All Active
-                </button>
-                <button
-                    className="btn btn-danger btn-sm"
-                    onClick={props.deleteAllTasks}
-
-                >
-                    Delete All Tasks
-                </button>
-            </div>
-            <div className="row mt-1">
-                <p className="col-6 float-left ml-0">Active: {props.countActive()}</p>         
+        <Container className="container-fluid text-center mt-2">
+            <Row className="justify-content-center">
+                <ButtonGroup className="btn-group btn-group-sm" role="group">
+                    <Button
+                        className="btn-secondary btn-sm"
+                        onClick={() => props.setFilter('all')}>
+                        All
+                </Button>
+                    <Button
+                        className="btn-secondary btn-sm"
+                        onClick={() => props.setFilter('active')}>
+                        Open
+                </Button>
+                    <Button
+                        className="btn-secondary btn-sm"
+                        onClick={() => props.setFilter('completed')}>
+                        Completed
+                </Button>
+                </ButtonGroup>
+            </Row>
+            <Row className="justify-content-center">
+                <ButtonGroup className="btn-group-sm mt-2" role="group">
+                    <Button
+                        className="btn-success btn-sm"
+                        onClick={props.markAllComplete}>
+                        Mark All Completed
+                </Button>
+                    <Button
+                        className="btn-warning btn-sm"
+                        onClick={props.markAllActive}>
+                        Mark All Active
+                </Button>
+                    <Button
+                        className="btn-danger btn-sm"
+                        onClick={props.deleteAllTasks}>
+                        Delete All Tasks
+                </Button>
+                </ButtonGroup>
+            </Row>
+            <Row className=" mt-1">
+                <p className="col-6 float-left ml-0">Active: {props.countActive()}</p>
                 <p className="col-6 float-right mr-0">Completed: {props.countCompleted()}</p>
-            </div>
-        </div>
+            </Row>
+        </Container>
     )
 }
 
-
-
 export default Footer;
-
-
-// Notepad
-// Remaining Active Task Count || Filter: All | Active | Completed || Completed Task Count: 
-// 
-// 
-// 
-// 
-// - Filter Options
-// - All
-// - Show Active and Completed Tasks
-// - Active Only
-// - Show Active Tasks
-// - Hide Completed Tasks
-// - Completed Only
-// - Hide Active Tasks
-// - Show Completed Tasks
