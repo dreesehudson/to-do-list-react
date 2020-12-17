@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-//importing Components
 import Header from './Components/Header.js'
 import Form from './Components/Form.js'
 import Filter from './Components/Filter.js'
+import { Button, Container, Input, Label, ListGroup, ListGroupItem } from 'reactstrap';
 
 
 class App extends Component {
@@ -25,8 +25,6 @@ class App extends Component {
     this.countCompleted = this.countCompleted.bind(this);
   }
   componentDidMount() {
-    //load localStorage if present
-
     let storedData = window.localStorage.getItem('tasks')
     if (storedData) {
       this.setState({ tasks: JSON.parse(storedData) })
@@ -35,16 +33,15 @@ class App extends Component {
     }
   }
   componentDidUpdate() {
-    //save list to localStorage on unload.
     window.localStorage.setItem('tasks', JSON.stringify(this.state.tasks))
   }
-  //update state as user types in the input field
+
   changeHandler(e) {
     this.setState({
       input: e.target.value
     })
   }
-  //applies as onClick to the Submit Button
+
   async addItem() {
     //object to be added to beginning of the array of tasks
     await this.setState(state => ({
@@ -60,7 +57,6 @@ class App extends Component {
   }
   //applies as onClick to the X Button on each task
   deleteItem(id) {
-    console.log(id);
     //proxy of state for current list of tasks.
     let taskList = [...this.state.tasks];
 
@@ -152,7 +148,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="App container justify-content-center">
+      <Container className="App container justify-content-center">
         <Header />
         <Form
           input={this.state.input}
@@ -167,8 +163,8 @@ class App extends Component {
           countActive={this.countActive}
           countCompleted={this.countCompleted}
         />
-        <ul 
-          className="list-group mt-2 mx-auto row list-unstyled">
+        <ListGroup
+          className="mt-2 mx-auto row list-unstyled">
           {this.state.tasks && this.state.tasks
             .filter((item) => {
               if (this.state.currentFilter === "all") {
@@ -181,39 +177,39 @@ class App extends Component {
                 return item
               }
             }
-            ) 
+            )
             .map((item) =>
-              <li 
+              <li
                 key={item.id}>
-                <div className="list-group-item mb-3">
+                <ListGroupItem className="list-group-item mb-3">
                   <div className="form-check">
-                    <input
+                    <Input
                       type="checkbox"
                       className="form-check-input"
                       id={item.id}
-                      onChange={ () => this.check(item.id)}
+                      onChange={() => this.check(item.id)}
                       checked={item.completed}  //<-----
                     />
-                    <label
+                    <Label
                       //if item.completed is true, strike-through the item
                       style={{ textDecoration: ((item.completed) ? 'line-through' : '') }}
                       className="form-check-label"
                     >
                       {item.name}
-                    </label>
-                    <button
+                    </Label>
+                    <Button
                       data-id={item.id}
-                      className="btn btn-sm btn-danger my-auto float-right"
+                      className="btn-sm btn-danger my-auto float-right"
                       onClick={() => this.deleteItem(item.id)}
                     >
                       Delete
-                  </button>
+                  </Button>
                   </div>
-                </div>
+                </ListGroupItem>
               </li>
             )}
-        </ul>
-      </div>
+        </ListGroup>
+      </Container>
     );
   }
 }

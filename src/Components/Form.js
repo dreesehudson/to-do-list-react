@@ -1,32 +1,23 @@
 import React from 'react';
+import { Input, Row, Button } from 'reactstrap';
 
 function Form(props) {
-
     return (
-        <div className="row justify-content-center">
-            <input 
+        <Row className="justify-content-center">
+            <Input
+                style={{ width: '50%'}}
                 value={props.input}
                 onChange={props.changeHandler}
                 placeholder="Task Name">
 
-            </input>
-            <button
-                className="btn btn-primary btn-sm"
-                onClick={props.addItem}
-            >
-                +
-            </button>
-        </div>
+            </Input>
+            <Button
+                className="btn-danger btn-sm"
+                onClick={props.addItem}>
+                Add Item
+            </Button>
+        </Row>
     );
-
 }
 
 export default Form;
-
-/* Notepad
-
-
-Task Name    |  Add
-
-
-*/
