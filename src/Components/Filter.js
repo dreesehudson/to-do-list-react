@@ -1,7 +1,8 @@
 import React from 'react';
 import { Row, Button, Container, ButtonGroup } from 'reactstrap';
 
-function Footer(props) {
+function Filter(props) {
+
     return (
         <Container className="container-fluid text-center mt-2">
             <Row className="justify-content-center">
@@ -27,19 +28,19 @@ function Footer(props) {
                 <ButtonGroup className="btn-group-sm mt-2" role="group">
                     <Button
                         className="btn-success btn-sm"
-                        onClick={props.markAllComplete}>
+                        onClick={() => { props.markAllComplete() }}>
                         Mark All Completed
-                </Button>
+                    </Button>
                     <Button
                         className="btn-warning btn-sm"
-                        onClick={props.markAllActive}>
+                        onClick={() => { props.markAllActive() }}>
                         Mark All Active
-                </Button>
+                    </Button>
                     <Button
                         className="btn-danger btn-sm"
-                        onClick={props.deleteAllTasks}>
+                        onClick={() => { props.deleteAllTasks() }}>
                         Delete All Tasks
-                </Button>
+                    </Button>
                 </ButtonGroup>
             </Row>
             <Row className=" mt-1">
@@ -50,4 +51,4 @@ function Footer(props) {
     )
 }
 
-export default Footer;
+export default Filter;
