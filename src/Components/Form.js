@@ -1,40 +1,32 @@
-import React, { useState} from 'react';
-import { Row, Button, Input, Col } from 'reactstrap';
-import useTasks from '../utilities/TasksContext'
+import React from 'react';
 
-
-function Form (props) {
-    const { tasks, setTasks } = useTasks();
-    const [input, setInput] = useState("");
-    
-    async function addItem() {
-        //object to be added to beginning of the array of tasks
-        await setTasks([{
-          "name": input,
-          "id": Date.now(),
-          "completed": false,
-        },
-        ...tasks]
-        )
-      }
+function Form(props) {
 
     return (
-        <Row>
-            <Col className='ml-auto'>
-                <Input
-                    onChange={e => setInput(e.target.value)}
-                    placeholder="Task Name">
-                </Input>
-            </Col>
-            <Col className='mr-auto'>
-                <Button
-                    className="btn-success btn-sm"
-                    onClick={addItem}>
-                    Add Item
-                </Button>
-            </Col>
-        </Row>
+        <div className="row justify-content-center">
+            <input 
+                value={props.input}
+                onChange={props.changeHandler}
+                placeholder="Task Name">
+
+            </input>
+            <button
+                className="btn btn-primary btn-sm"
+                onClick={props.addItem}
+            >
+                +
+            </button>
+        </div>
     );
+
 }
 
 export default Form;
+
+/* Notepad
+
+
+Task Name    |  Add
+
+
+*/
